@@ -4,7 +4,7 @@ const tags = [
   'break',
   'back',
   'logged off', 'left','leaving',
-  'min', 'lunch'
+  'lunch'
 ]
 const regex = /@|at|At/;
 const percentage = 0.75
@@ -21,7 +21,7 @@ const classifyTags = ({message, ...rest}) => {
   const isMatch = min <= match && match <= length 
   const isClassified = isAtPresent 
     ? dist <= length+8 && isMatch
-    : isMatch
+    : isMatch && dist <= 5
   const result = isClassified
     ?{tag: tag, classified: true}
     :{}
