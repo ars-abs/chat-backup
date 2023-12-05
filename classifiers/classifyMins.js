@@ -1,16 +1,16 @@
-const regex = /^\s*(\d+)\s*m(in|ins)?\s*$/i;
+const regex = /^\s*(\d+)\s*m(in|ins)?\s*(break)?$/i;
 
-const classifyMins = ({message, ...rest}) => {
+const classifyMins = ({ message, classified }) => {
+
   const text = (message || '').toLowerCase().trim();
-  const result = !!text.match(regex) 
-    ?{tag:'break', classified: true}
-    :{}
+  const result = !!text.match(regex) ? { tag: 'break', classified: true } : {}
 
-  return {
-    ...rest,
-    message:text,
-    ...result
-  }
+  return !classified
+    ? {
+      message: text,
+      ...result
+    }
+    : {}
 }
 
 module.exports = classifyMins

@@ -3,10 +3,11 @@ const classifyLeaving = require("./classifiers/classifyLeaving")
 const classifyMins = require("./classifiers/classifyMins")
 const classifyTags = require("./classifiers/classifyTags")
 
-const pipes = [classifyMins,classifyLeaving,classifyTags]
+const pipes = [classifyMins, classifyLeaving, classifyTags]
 
-const classify = (message)=>reduce(pipes, (acc,pipe)=>{
-  return {...acc, ...pipe({message})}
-}, {tag: 'unknown', classified: false})
+const classify = (message) => reduce(pipes, (acc, pipe) => {
+  const { classified } = acc
+  return { ...acc, ...pipe({ message, classified }) }
+}, { tag: 'unknown', classified: false })
 
-module.exports=classify
+module.exports = classify
