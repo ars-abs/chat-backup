@@ -15,13 +15,13 @@ const classifyTags = ({ message, classified }) => {
   const isAtPresent = !!text.match(regex)
   const tag = closest(text, tags);
   const dist = distance(text, tag);
-  const length = tag.length;
-  const min = length <= 5 ? length * half : length * percentage
-  const match = length < text.length ? text.length - dist : length - dist
-  const isMatch = min <= match && match <= length
+  const tagLength = tag.length;
+  const min = tagLength <= 5 ? tagLength * half : tagLength * percentage
+  const match = tagLength < text.length ? text.length - dist : tagLength - dist
+  const isMatch = min <= match && match <= tagLength
   const isClassified = isAtPresent
     ? dist <= min + 8 && isMatch
-    : isMatch && dist <= 3
+    : isMatch && dist <= min
   const result = isClassified
     ? { tag: tag, classified: true }
     : {}
@@ -29,6 +29,7 @@ const classifyTags = ({ message, classified }) => {
   return !classified 
     ?{
       message: text,
+      dist,
       ...result
     }
     : {}
