@@ -1,14 +1,22 @@
 const { map, find } = require('@laufire/utils/collection');
+const { keys } = require('@laufire/utils/collection');
 const { closest, distance } = require('fastest-levenshtein')
-const tags = [
-  'connected', 'available', 'logged in',
-  'now break', 'logging off', 'logging off for the day',
-  'break', 'disconnected', 'lunch break', 'leaving now',
-  'back', 'now back',
-  'logged off', 'left', 'leaving',
-  'lunch'
-]
 
+const tagsMatch = {
+  'connected': 1, 
+  'break': 2, 
+  'back': 1, 
+  'leaving': 1,
+  'logged in': 1,
+  'logging off': 1, 
+  'logging off for the day': 4,
+  'disconnected': 1, 
+  'logged off': 1, 
+  'left': 1, 
+  'lunch': 3,
+}
+
+const tags = keys(tagsMatch)
 const classifyWordByWord = ({ message, classified }) => {
   if (classified) return {}
 
