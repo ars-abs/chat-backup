@@ -1,4 +1,4 @@
-const regex = /^\s*(\d+)\s*m(in|ins)?\s*(break)?$/i;
+const regex = /^\s*(\d+)\s*m(in|ns|ins|')?'?\s*(break)?$/i;
 
 const classifyMins = ({ message, classified }) => {
 
