@@ -2,8 +2,14 @@ const { reduce } = require("@laufire/utils/collection")
 const classifyLeaving = require("./classifiers/classifyLeaving")
 const classifyMins = require("./classifiers/classifyMins")
 const classifyTags = require("./classifiers/classifyTags")
+const classifyWordByWord = require("./classifiers/classifyWordByWord")
 
-const pipes = [classifyMins, classifyLeaving, classifyTags]
+const pipes = [
+  classifyMins, 
+  classifyLeaving, 
+  classifyTags,
+  classifyWordByWord
+]
 
 const classify = (message) => reduce(pipes, (acc, pipe) => {
   const { classified } = acc
