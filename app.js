@@ -1,4 +1,5 @@
 require('isomorphic-fetch');
+require('dotenv').config()
 const azure = require('@azure/identity');
 const { map, values } = require('@laufire/utils/collection');
 const { pretty } = require('@laufire/utils/debug');
