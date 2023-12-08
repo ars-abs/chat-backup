@@ -3,6 +3,7 @@ const { closest, distance } = require('fastest-levenshtein')
 const tagsMatch = {
   'connected': 1, 
   'break': 2, 
+  'dinner': 1,
   'back': 1, 
   'leaving': 1,
   'logged in': 1,
@@ -26,7 +27,7 @@ const classifyTags = ({ message, classified }) => {
   const dist = distance(text, tag);
   const isMatch = dist <= tagsMatch[tag]
   const isClassified = isAtPresent
-    ? dist <= 10 && isMatch && wordCount <= 4
+    ? dist <= 10 && isMatch //&& wordCount <= 4
     : isMatch
   const result = isClassified
     ? { tag: tag, classified: true }

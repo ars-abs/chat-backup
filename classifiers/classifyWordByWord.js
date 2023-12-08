@@ -25,12 +25,12 @@ const classifyWordByWord = ({ message, classified }) => {
   const wordsMatch = map(words, (word) => {
     const tag = closest(word, tags);
     const dist = distance(word, tag);
-    return { tag, isMatch: dist < 2 }
+    return { tag, isMatch: dist <= tagsMatch[tag] }
   })
 
   const data = find(wordsMatch, ({ isMatch }) => isMatch)
 
-  return data && words.length <= 4
+  return data //&& words.length <= 4
     ? { tag: data.tag, classified: true }
     : {}
 }
