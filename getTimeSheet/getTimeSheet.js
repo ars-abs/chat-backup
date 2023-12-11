@@ -1,5 +1,5 @@
 const XLSX = require('xlsx');
-const { clone, map, select } = require('@laufire/utils/collection');
+const { clone, map, select, filter, reduce } = require('@laufire/utils/collection');
 const { index } = require('@laufire/utils/crunch');
 
 // {id, vendor, time, message, tag}
@@ -9,6 +9,7 @@ const verifyPairs = require('./verifyPairs');
 const calculateTime = require('./calculateTime');
 const seed = data.flatMap(msg => [...msg]);
 
+const filterInvalidMsg = ({data})=>({data: filter(data, ({tag}) => tag !== 'unknown')})
 const sortByTime = ({data}) => {
   const cloned = clone(data)
   cloned.sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -36,9 +37,20 @@ const getData = ({ data }) =>{
   return rtnVal
 }
 
-// TODO: Filter invalid message
+const pipe = (collection,context) => reduce(collection, (acc,fn) => fn(acc), context )
+
+// TODO: Calculate @ time entries
 const getTimeSheet = (context) => {
-  const data = getData(calculateTime(verifyPairs(groupByDateAndVendor(sortByTime(enrichData(context))))))
+  const steps = [
+    filterInvalidMsg,
+    enrichData,
+    sortByTime,
+    groupByDateAndVendor,
+    verifyPairs,
+    calculateTime,
+    getData
+  ]
+  const data = pipe(steps, context)
   const workbook = XLSX.utils.book_new();
   const worksheet = XLSX.utils.json_to_sheet(data);
   XLSX.utils.book_append_sheet(workbook, worksheet, 'timeSheet');
