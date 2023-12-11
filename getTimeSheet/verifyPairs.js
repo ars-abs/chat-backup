@@ -8,12 +8,12 @@ const verifyPairs = ({ data }) => ({
         ({ startCount, endCount, isConsecutive }, { session }, key, data) => {
           const nextSession = data[key + 1]?.session;
 
-          // ((session === 'start' && nextSession !== 'end') || (session === 'end' && (nextSession !== 'start' || !nextSession) ))
-          //   && (isConsecutive = false)
+          session && nextSession && ((session === 'start' && nextSession !== 'end') || (session === 'end' && nextSession !== 'start' ))
+            && (isConsecutive = false)
 
           session === 'start' && startCount++
           session === 'end' && endCount++
-          const isCorrectPairs = startCount === endCount
+          const isCorrectPairs = !!session && startCount === endCount
           const isStartMissed = startCount < endCount
           const isEndMissed = startCount > endCount
           return { startCount, endCount, isConsecutive, isCorrectPairs, isStartMissed, isEndMissed }

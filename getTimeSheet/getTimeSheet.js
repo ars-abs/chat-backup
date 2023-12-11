@@ -1,11 +1,12 @@
-const { clone, map } = require('@laufire/utils/collection');
+const XLSX = require('xlsx');
+const { clone, map, select } = require('@laufire/utils/collection');
 const { index } = require('@laufire/utils/crunch');
 
 // {id, vendor, time, message, tag}
 const data = require('../trail.json'); 
 const enrichData = require('./enrichData');
 const verifyPairs = require('./verifyPairs');
-const calcWorkHours = require('./calculateTime');
+const calculateTime = require('./calculateTime');
 const seed = data.flatMap(msg => [...msg]);
 
 const sortByTime = ({data}) => {
@@ -17,22 +18,33 @@ const sortByTime = ({data}) => {
 const groupByDateAndVendor = ({data}) => {
   return {data: index(data, ['date','vendor'])}
 }
-const calculateTime = ({data}) => ({
-  data: map(data, (dates) => 
-    map(dates, (messages) => {
-      const {isCorrectPairs, isConsecutive} = messages
-      const hours = isCorrectPairs && isConsecutive
-        ? calcWorkHours(messages) 
-        : { hour: '00:00', workHour: 0 }
-      return {...messages, ...hours}
-    })
-  )
-})
 
+
+const getData = ({ data }) =>{
+  const rtnVal = []
+  map(data, (dates, date) =>
+    map(dates, ({messages, ...rest}, vendor) => {
+      const temp = map(messages, (msg) => select(msg, ['session','time','message']))
+      rtnVal.push({
+        ...rest, 
+        date, 
+        vendor, 
+        messages: JSON.stringify(temp)
+      })
+    }))
+
+  return rtnVal
+}
+
+// TODO: Filter invalid message
 const getTimeSheet = (context) => {
-  const test = calculateTime(verifyPairs(groupByDateAndVendor(sortByTime(enrichData(context)))))
+  const data = getData(calculateTime(verifyPairs(groupByDateAndVendor(sortByTime(enrichData(context))))))
+  const workbook = XLSX.utils.book_new();
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'timeSheet');
+  XLSX.writeFile(workbook, 'tempTimeSheet.xlsx');
 
-  return test
+  console.log('Excel file created successfully!');
 }
 getTimeSheet({data: seed})
 module.exports= getTimeSheet

@@ -1,10 +1,5 @@
+const { map } = require('@laufire/utils/collection');
 const dayjs = require('dayjs');
-
-const convertMinutesToHourFormat = (totalMinutes) => {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-}
 
 const calcWorkHours = (data) => {
   const {messages} = data
@@ -19,9 +14,22 @@ const calcWorkHours = (data) => {
   }
 
   const totalMinutes = Math.round(totalSeconds / 60);
-  const hourFormat = convertMinutesToHourFormat(totalMinutes);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
-  return { hour: hourFormat, workHour: (totalMinutes / 60).toFixed(2) };
+  return { hours, minutes, duration: (totalMinutes / 60).toFixed(2) };
 }
 
-module.exports = calcWorkHours
+const calculateTime = ({data}) => ({
+  data: map(data, (dates) => 
+    map(dates, (messages) => {
+      const {isCorrectPairs, isConsecutive} = messages
+      const hours = isCorrectPairs && isConsecutive
+        ? calcWorkHours(messages) 
+        : { hours: 0, minutes: 0, duration: 0 }
+      return {...messages, ...hours}
+    })
+  )
+})
+
+module.exports = calculateTime
