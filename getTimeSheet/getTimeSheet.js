@@ -3,10 +3,11 @@ const { clone, map, select, filter, reduce } = require('@laufire/utils/collectio
 const { index } = require('@laufire/utils/crunch');
 
 // {id, vendor, time, message, tag}
-const data = require('../trail.json'); 
+const data = require('../data/trail.json'); 
 const enrichData = require('./enrichData');
 const verifyPairs = require('./verifyPairs');
 const calculateTime = require('./calculateTime');
+const resolveTime = require('./resolveTime');
 const seed = data.flatMap(msg => [...msg]);
 
 const filterInvalidMsg = ({data})=>({data: filter(data, ({tag}) => tag !== 'unknown')})
@@ -44,6 +45,7 @@ const getTimeSheet = (context) => {
   const steps = [
     filterInvalidMsg,
     enrichData,
+    resolveTime,
     sortByTime,
     groupByDateAndVendor,
     verifyPairs,
