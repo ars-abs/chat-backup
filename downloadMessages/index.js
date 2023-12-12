@@ -32,7 +32,9 @@ const getMessage = async (nextLink) => {
 };
 
 const saveData = () => {
-  fs.writeFileSync('../data/source.json',pretty(data, 2))
+  fs.open('data/source.json','w+', (err, fd)=>{
+    fs.write(fd, pretty(data, 2), () => {})
+  })
 }
 
 const downloadMessages = async () => {
