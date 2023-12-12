@@ -4,11 +4,10 @@ const transform = require('./transform');
 const { pipe } = require('../helper');
 
 // TODO: Calculate @ time entries
-const getTimeSheet = (context) => pipe([
+const buildTimeSheet = (context) => pipe([
   extractSheet,
   transform,
   loadTimeSheet,
 ], context)
 
-getTimeSheet()
-module.exports = getTimeSheet
+module.exports = buildTimeSheet
