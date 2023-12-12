@@ -1,7 +1,7 @@
 const { map } = require('@laufire/utils/collection')
 const { convert } = require('html-to-text');
 
-const classify = require('../classify');
+const classify = require('./classify');
 const replyHandle = ({ message: { content }, createdAt: time, from: vendor, id }) => {
 
   const { message, tag } = classify(convert(content));

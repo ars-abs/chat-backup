@@ -4,6 +4,7 @@ const classifyMins = require("./classifiers/classifyMins")
 const classifyTags = require("./classifiers/classifyTags")
 const classifyWordByWord = require("./classifiers/classifyWordByWord")
 
+// TODO: use js/utils classify
 const pipes = [
   classifyMins, 
   classifyLeaving, 
