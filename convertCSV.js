@@ -1,4 +1,4 @@
-const data = require('./trail.json')
+const data = require('./data/trail.json')
 const XLSX = require('xlsx');
 const seed = data.flatMap(msg => [...msg]);
 const workbook = XLSX.utils.book_new();

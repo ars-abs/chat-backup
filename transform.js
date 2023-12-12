@@ -2,7 +2,7 @@ const { peek, pretty } = require('@laufire/utils/debug')
 const { map } = require('@laufire/utils/collection')
 const { convert } = require('html-to-text');
 
-const messages = require('./temp.json')
+const messages = require('./data/temp.json')
 const classify = require('./classify');
 const replyHandle = ({ message: { content }, createdAt: time, from: vendor,id }) => {
 
