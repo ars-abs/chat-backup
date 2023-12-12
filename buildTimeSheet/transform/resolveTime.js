@@ -35,6 +35,7 @@ const resolve = ({message, time}) => {
 
 
       updatedTime = updatedTime.set('hours', adjustedHour);
+      updatedTime = updatedTime.set('minutes', 0);
     }
 
     if (match[2]) {

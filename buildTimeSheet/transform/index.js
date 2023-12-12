@@ -9,7 +9,7 @@ const verifyPairs = require('./verifyPairs')
 const selectData = require('./selectData')
 
 const transform = (context) => pipe([
-  filterInvalidMsg,
+  // filterInvalidMsg,
   enrichData,
   sortByTime,
   resolveTime,
