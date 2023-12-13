@@ -17,7 +17,7 @@ const calcWorkHours = (data) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
-  return { hours, minutes, duration: (totalMinutes / 60).toFixed(2) };
+  return { hours, minutes, duration: parseFloat((totalMinutes / 60).toFixed(2)) };
 }
 
 const calculateTime = ({data}) => ({
