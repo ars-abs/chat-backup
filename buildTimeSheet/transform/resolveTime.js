@@ -7,7 +7,7 @@ dayjs.extend(customParseFormat);
 const { map } = require("@laufire/utils/collection")
 
 const resolve = ({message, time}) => {
-  const timeRegex = /(\d{1,2})\s?[.:]\s?(\d{2})\s?([ap]m)?/i;
+  const timeRegex = /(at|@|At)\s?(\d{1,2})\s?[.:]?\s?(\d{2})?\s?([ap]m)?/i;
   const match = message.match(timeRegex);
 
   if (match) {
@@ -16,10 +16,10 @@ const resolve = ({message, time}) => {
     const inpHr = dayjsDateTime.hour() % 12
     let updatedTime = dayjsDateTime;
 
-    if (match[1]) {
-      const hour = parseInt(match[1], 10);
+    if (match[2]) {
+      const hour = parseInt(match[2], 10);
       let adjustedHour = hour;
-      const amOrPm = (match[3] || "").toLowerCase();
+      const amOrPm = (match[4] || "").toLowerCase();
 
       if (amOrPm === 'pm' && hour < 12) {
         adjustedHour += 12;
@@ -38,8 +38,8 @@ const resolve = ({message, time}) => {
       updatedTime = updatedTime.set('minutes', 0);
     }
 
-    if (match[2]) {
-      const minute = parseInt(match[2], 10);
+    if (match[3]) {
+      const minute = parseInt(match[3], 10);
       updatedTime = updatedTime.set('minutes', minute);
     }
 
