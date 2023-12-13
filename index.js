@@ -1,8 +1,8 @@
 
 const buildTimeSheet = require('./buildTimeSheet')
 const classifySessions = require('./classifySessions')
-const downloadMessages = require('./downloadMessages/index')
-const classifyMessages = require('./processMessages/index')
+const downloadMessages = require('./downloadMessages')
+const classifyMessages = require('./classifyMessages')
 
 const main = () =>{
   const options = {

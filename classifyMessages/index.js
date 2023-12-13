@@ -4,9 +4,11 @@ const transform = require('./transform')
 const load = require('./load')
 const { pipe } = require('../helper')
 
-const processMessages = () => {
-  const steps = [extract, transform, load]
-  pipe(steps, { messages })
-}
+const classifyMessages = () => pipe([
+  extract, 
+  transform, 
+  load
+], { messages })
 
-module.exports = processMessages;
+
+module.exports = classifyMessages;
