@@ -52,7 +52,7 @@ const resolve = ({message, time}) => {
 const resolveTime = ({data: messages}) => ({
   data: map(messages, (message) => {
     const changedTime = resolve(message)
-    return {...message, time: changedTime, }
+    return {...message, time: changedTime }
   })
 })
 
