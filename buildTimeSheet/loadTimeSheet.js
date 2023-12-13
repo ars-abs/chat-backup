@@ -3,9 +3,14 @@ const { createXLSX } = require("../helper")
 
 const loadTimeSheet = (messages) => {
   const data = map(messages, (message) =>
-    select(message, ['vendor','date', 'hours', 'minutes', 'duration']))
+    select(message, ['vendor', 'date', 'hours', 'minutes', 'duration']))
 
-  createXLSX({ filePath: 'data/timeSheet.xlsx', sheetName: 'data', data: data })
+  createXLSX({
+    filePath: 'data/timeSheet.xlsx',
+    sheetName: 'data',
+    data: data,
+    order: ['vendor', 'date', 'hours', 'minutes', 'duration']
+  })
 }
 
 module.exports = loadTimeSheet;
