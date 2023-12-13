@@ -6,7 +6,7 @@ dayjs.extend(utc);
 dayjs.extend(customParseFormat);
 const { map } = require("@laufire/utils/collection")
 
-const resolve = ({message, time}) => {
+const resolve = ({ message, time }) => {
   const timeRegex = /(at|@|At)\s?(\d{1,2})\s?[.:]?\s?(\d{2})?\s?([ap]m)?/i;
   const match = message.match(timeRegex);
 
@@ -23,13 +23,13 @@ const resolve = ({message, time}) => {
 
       if (amOrPm === 'pm' && hour < 12) {
         adjustedHour += 12;
-      } 
+      }
       else if (amOrPm === 'am' && hour === 12) {
         adjustedHour = 0;
       }
-      else{
+      else {
         const isPast = hour <= inpHr
-        const isPm = isPast? isInpPM : !isInpPM
+        const isPm = isPast ? isInpPM : !isInpPM
         isPm && (adjustedHour += 12)
       }
 
@@ -49,11 +49,14 @@ const resolve = ({message, time}) => {
   }
 }
 
-const resolveTime = ({data: messages}) => ({
+const resolveTime = ({ data: messages }) => ({
   data: map(messages, (message) => {
+    const createdAt = dayjs(message.time).format('YYYY-MM-DD HH:mm:ss');
     const changedTime = resolve(message)
-    return {...message, time: changedTime }
+    const dateTime = dayjs(changedTime).format('YYYY-MM-DD HH:mm:ss');
+
+    return { ...message, time: changedTime, dateTime, createdAt }
   })
 })
 
-module.exports=resolveTime
+module.exports = resolveTime

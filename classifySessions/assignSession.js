@@ -1,5 +1,4 @@
 const { map } = require("@laufire/utils/collection");
-const dayjs = require("dayjs");
 
 const sessionsMap = {
   'connected': 'start', 
@@ -19,10 +18,9 @@ const sessionsMap = {
 
 const assignSession = ({data}) => ({
   data: map(data, (message) =>{
-    const dateTime = dayjs(message.time).format('YYYY-MM-DD HH:mm:ss');
     const session = sessionsMap[message.tag] || 'unknown'
 
-    return { ...message, dateTime, session }
+    return { ...message, session }
   })
 })
 

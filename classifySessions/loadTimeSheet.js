@@ -3,13 +3,13 @@ const { createXLSX } = require("../helper")
 
 const loadTimeSheet = (context) => {
   const data = map(context.data, (message) =>
-    select(message, ['id', 'time', 'dateTime', 'message', 'tag', 'session']))
+    select(message, ['id', 'createdAt', 'time', 'dateTime', 'message', 'tag', 'session']))
 
   createXLSX({
     filePath: 'data/classifiedSessions.xlsx',
     sheetName: 'data',
     data: data,
-    order: ['id', 'time', 'dateTime', 'message', 'tag', 'session']
+    order: ['id', 'time', 'createdAt', 'dateTime', 'message', 'tag', 'session']
   })
 }
 
