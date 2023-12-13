@@ -1,13 +1,15 @@
 
 const buildTimeSheet = require('./buildTimeSheet')
-const download = require('./downloadMessages/index')
-const processMsg = require('./processMessages/index')
+const classifySessions = require('./classifySessions')
+const downloadMessages = require('./downloadMessages/index')
+const classifyMessages = require('./processMessages/index')
 
 const main = () =>{
   const options = {
-    download,
-    processMsg,
-    buildTimeSheet
+    download: downloadMessages,
+    messages: classifyMessages,
+    sessions: classifySessions,
+    build: buildTimeSheet,
   }
   const option = process.argv[2]
 
