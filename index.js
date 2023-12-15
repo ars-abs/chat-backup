@@ -1,10 +1,10 @@
-
+const config = require('./config')
 const buildTimeSheet = require('./buildTimeSheet')
 const classifySessions = require('./classifySessions')
 const downloadMessages = require('./downloadMessages')
 const classifyMessages = require('./classifyMessages')
 
-const main = () =>{
+const main = (context) =>{
   const options = {
     download: downloadMessages,
     messages: classifyMessages,
@@ -13,7 +13,7 @@ const main = () =>{
   }
   const option = process.argv[2]
 
-  options[option]()
+  options[option](context)
 }
 
-main()
+main({config})

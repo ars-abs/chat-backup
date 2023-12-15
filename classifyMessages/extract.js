@@ -1,7 +1,7 @@
 const { map, filter } = require('@laufire/utils/collection');
 const dayjs = require('dayjs');
 
-const extract = ({ messages, startDate, endDate }) => {
+const extract = ({ messages, config: { startDate, endDate } }) => {
   const start = dayjs(startDate.split('/').reverse().join('-'));
   const end = dayjs(endDate.split('/').reverse().join('-'));
   const filteredMessage = filter(messages, (message) =>
