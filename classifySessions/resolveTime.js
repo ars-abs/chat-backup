@@ -11,7 +11,7 @@ const resolve = ({ message, time }) => {
   const match = message.match(timeRegex);
 
   if (match) {
-    const dayjsDateTime = dayjs(time, { format: 'YYYY-MM-DDTHH:mm:ss.SSSZ' });
+    const dayjsDateTime = dayjs(time);
     const isInpPM = dayjsDateTime.hour() >= 12
     const inpHr = dayjsDateTime.hour() % 12
     let updatedTime = dayjsDateTime;
@@ -43,7 +43,7 @@ const resolve = ({ message, time }) => {
       updatedTime = updatedTime.set('minutes', minute);
     }
 
-    return updatedTime.format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+    return updatedTime.toDate();
   } else {
     return time;
   }
@@ -51,11 +51,10 @@ const resolve = ({ message, time }) => {
 
 const resolveTime = ({ data: messages }) => ({
   data: map(messages, (message) => {
-    const createdAt = dayjs(message.time).format('YYYY-MM-DD HH:mm:ss');
+    const createdAt = dayjs(message.time).toDate();
     const changedTime = resolve(message)
-    const dateTime = dayjs(changedTime).format('YYYY-MM-DD HH:mm:ss');
 
-    return { ...message, time: changedTime, dateTime, createdAt }
+    return { ...message, time: changedTime, createdAt }
   })
 })
 

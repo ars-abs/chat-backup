@@ -11,7 +11,7 @@ const createXLSX = ({ filePath, sheetName, data, order }) => {
 }
 
 const readXLSX = ({ filePath, sheetName }) => {
-  const workbook = XLSX.readFile(filePath);
+  const workbook = XLSX.readFile(filePath, {cellDates: true});
   const sheet = workbook.Sheets[sheetName];
   const data = XLSX.utils.sheet_to_json(sheet);
 
