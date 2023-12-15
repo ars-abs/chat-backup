@@ -4,7 +4,7 @@ const dayjs = require("dayjs")
 
 const groupByDateAndVendor = (context) => {
   const data = map(context.data, (message) => ({ 
-    ...message, date: dayjs(message.time).format('DD-MM-YYYY')
+    ...message, date: dayjs(message.time).format('YYYY-MM-DD')
   }))
   
   return {data: index(data, ['date','vendor'])}

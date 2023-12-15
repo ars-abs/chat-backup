@@ -7,7 +7,7 @@ const selectData = ({ data }) =>{
       const temp = map(messages, (msg) => select(msg, ['session','time','message']))
       rtnVal.push({
         ...rest, 
-        date, 
+        date: new Date(date), 
         vendor, 
         messages: JSON.stringify(temp)
       })
