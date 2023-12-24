@@ -6,7 +6,7 @@ const load = ({ messages }) => {
     filePath: 'data/classifiedMessages.xlsx',
     sheetName: 'data',
     data: messages,
-    order: ['id', 'vendor', 'time', 'message', 'tag']
+    order: ['id', 'time', 'message', 'tag']
   })
 }
 

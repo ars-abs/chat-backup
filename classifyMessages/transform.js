@@ -4,19 +4,19 @@ const { convert } = require('html-to-text');
 const classify = require('./classify');
 const dayjs = require('dayjs');
 
-const replyHandle = ({ message: { content }, createdAt, from: vendor, id }) => {
+const replyHandle = ({ message: { content }, createdAt, id }) => {
   const time = dayjs(createdAt).subtract(10, 'seconds').toDate()
   const { message, tag } = classify(convert(content));
 
-  return { id, vendor, time, message, tag }
+  return { id, time, message, tag }
 }
 
 const transform = ({ messages }) => ({
   messages: (map(messages, (data) => {
-    const { message: { content }, createdAt, from: vendor, replies, id } = data
+    const { message: { content }, createdAt, replies, id } = data
     const { message, tag } = classify(convert(content))
     const time = dayjs(createdAt).subtract(10, 'seconds').toDate()
-    const first = { id, vendor, time, message, tag }
+    const first = { id, time, message, tag }
     const repliesData = map(replies, replyHandle)
 
     return [first, ...repliesData]
