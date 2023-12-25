@@ -7,7 +7,7 @@ const groupByDateAndID = (context) => {
     ...message, date: dayjs(message.time).format('YYYY-MM-DD')
   }))
   
-  return {data: index(data, ['date','id'])}
+  return {...context, data: index(data, ['date','id'])}
 }
 
 module.exports = groupByDateAndID

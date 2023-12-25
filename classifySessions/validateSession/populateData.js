@@ -1,8 +1,8 @@
 const { map } = require("@laufire/utils/collection");
 
-const populateData = ({data}) => {
+const populateData = (context) => {
   const populatedData = []
-  map(data, (dayMessagesPerUser) =>
+  map(context.data, (dayMessagesPerUser) =>
     map(dayMessagesPerUser, (userMessages) => {
       let suspected = false;
 
@@ -27,17 +27,15 @@ const populateData = ({data}) => {
           return message
         }
 
-        const result  = session === 'invalid' 
-          ?message
-          :suspected 
-            ? {...message, session: 'unknown'} 
-            : checkSessionSequence()
+        const result  = suspected 
+          ? {...message, session: 'unknown'} 
+          : checkSessionSequence()
         
         populatedData.push(result)
       })
     }))
   
-  return {data: populatedData}
+  return {...context, data: populatedData}
 }
 
 module.exports = populateData
