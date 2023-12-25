@@ -5,12 +5,12 @@ const sessionsMap = {
   'break': 'end', 
   'back': 'start', 
   'leaving': 'end',
-  'invalid': 'unknown',
+  'invalid': 'invalid',
 }
 
 const assignSession = ({data}) => ({
   data: map(data, (message) =>{
-    const session = sessionsMap[message.tag] || 'unknown'
+    const session = sessionsMap[message.tag] || 'invalid'
 
     return { ...message, session }
   })

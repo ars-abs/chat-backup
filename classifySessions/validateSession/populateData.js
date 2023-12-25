@@ -27,9 +27,11 @@ const populateData = ({data}) => {
           return message
         }
 
-        const result  = suspected 
-          ? {...message, session: 'unknown'} 
-          : checkSessionSequence()
+        const result  = session === 'invalid' 
+          ?message
+          :suspected 
+            ? {...message, session: 'unknown'} 
+            : checkSessionSequence()
         
         populatedData.push(result)
       })

@@ -6,11 +6,13 @@ const extractSheet = require("./extractSheet");
 const loadTimeSheet = require("./loadTimeSheet");
 const changeDateFormat = require("./changeDateFormat");
 const validateSession = require("./validateSession");
-const filterInvalidMsg = require("../buildTimeSheet/transform/filterInvalidMsg");
+const assignTags = require("./assignTags");
+const mapVendors = require("../buildTimeSheet/transform/mapVendors");
 
 const classifySessions = () => pipe([
   extractSheet,
-  filterInvalidMsg,
+  assignTags,
+  mapVendors,
   changeDateFormat,
   sortByTime,
   resolveTime,
