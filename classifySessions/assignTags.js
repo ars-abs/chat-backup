@@ -9,6 +9,7 @@ const tagsMap = {
   'dinner': 'break',
   'logging off for the day': 'leaving',
   'left': 'leaving', 
+  'unknown': 'invalid'
 }
 
 const assignTags = ({data}) => ({

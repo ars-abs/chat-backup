@@ -8,7 +8,8 @@ const tagsMap = {
   'lunch': 'break',
   'dinner': 'break',
   'logging off for the day': 'leaving',
-  'left': 'leaving', 
+  'left': 'leaving',
+  'will': 'invalid'
 }
 
 const assignTags = ({messages}) => ({

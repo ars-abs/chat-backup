@@ -6,6 +6,7 @@ const sessionsMap = {
   'back': 'start', 
   'leaving': 'end',
   'invalid': 'invalid',
+  'unknown': 'invalid'
 }
 
 const assignSession = ({data}) => ({
